@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import { plus,
-  convertToSubnet,
-  networkClassSplit,
-  ipToNetAddress,
-  ipToBroadcast,
+  subnet,
+  IpToBinary,
+  NetworkAdd,
+  binaryIpToIp
 } from './helper';
 
 describe('test plus', () => {
@@ -13,45 +13,30 @@ describe('test plus', () => {
   })
 })
 
-describe('test convertToSubnet', () => {
-  it('should convert to subnet', () => {
-    expect(convertToSubnet(1)).to.equal('128.0.0.0');
-    expect(convertToSubnet(2)).to.equal('192.0.0.0');
-    expect(convertToSubnet(24)).to.equal('255.255.255.0');
-    expect(convertToSubnet(15)).to.equal('255.254.0.0');
-  });
+describe('test subnet', () => {
+  it('should subnet number', () => {
+    expect(subnet(1)).to.equal('128.0.0.0');
+    expect(subnet(32)).to.equal('255.255.255.255');
+  })
 })
 
-describe('test networkClassSplit', () => {
-  it('should show arry of subnet', () => {
-    const expectedValue = [
-      `${convertToSubnet(32)} / 32`,
-      `${convertToSubnet(31)} / 31`,
-      `${convertToSubnet(30)} / 30`,
-      `${convertToSubnet(29)} / 29`,
-      `${convertToSubnet(28)} / 28`,
-      `${convertToSubnet(27)} / 27`,
-      `${convertToSubnet(26)} / 26`,
-      `${convertToSubnet(25)} / 25`,
-      `${convertToSubnet(24)} / 24`,
-    ]
-    const value = networkClassSplit('c');
-    value.map((subnet, index) => {
-      expect(subnet).to.equal(expectedValue[index]);
-    });
-  });
+describe('test IpToBinary', () => {
+  it('should IpToBinary number', () => {
+    expect(IpToBinary('255.255.255.255')).to.equal('11111111.11111111.11111111.11111111');
+    expect(IpToBinary('128.128.128.128')).to.equal('10000000.10000000.10000000.10000000');
+  })
 })
 
-describe('ipToNetAddress test', () => {
-  it('should show network address', () => {
-    expect(ipToNetAddress('159.108.12.111', 28)).to.equal('159.108.12.96');
-    expect(ipToNetAddress('159.228.12.111', 13)).to.equal('159.224.0.0');
-    expect(ipToNetAddress('158.108.12.34', 21)).to.equal('158.108.8.0');
-  });
+describe('test NetworkAdd', () => {
+  it('should NetworkAdd number', () => {
+    expect(NetworkAdd('255.255.255.0', 24)).to.equal('255.255.255.0');
+    expect(NetworkAdd('255.255.255.255', 16)).to.equal('255.255.0.0');
+  })
 })
 
-describe('ipToBroadcast test', () => {
-  it('should show broad case address', () => {
-    expect(ipToBroadcast('158.108.12.34', 21)).to.equal('158.108.15.255');
-  });
+describe('test binaryIpToIp', () => {
+  it('should binaryIpToIp number', () => {
+    expect(binaryIpToIp('11111111.11111111.11111111.11111111')).to.equal('255.255.255.255');
+    expect(binaryIpToIp('10000000.10000000.10000000.10000000')).to.equal('128.128.128.128');
+  })
 })
