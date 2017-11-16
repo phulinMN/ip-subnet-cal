@@ -3,7 +3,9 @@ import { plus,
   subnet,
   IpToBinary,
   NetworkAdd,
-  binaryIpToIp
+  binaryIpToIp,
+  broadcast,
+  IpToDecimal
 } from './helper';
 
 describe('test plus', () => {
@@ -38,5 +40,19 @@ describe('test binaryIpToIp', () => {
   it('should binaryIpToIp number', () => {
     expect(binaryIpToIp('11111111.11111111.11111111.11111111')).to.equal('255.255.255.255');
     expect(binaryIpToIp('10000000.10000000.10000000.10000000')).to.equal('128.128.128.128');
+  })
+})
+
+describe('test broadcast', () => {
+  it('should broadcast number', () => {
+    expect(broadcast('255.255.255.0', 24)).to.equal('255.255.255.255');
+    expect(broadcast('255.255.255.255', 16)).to.equal('255.255.255.255');
+  })
+})
+
+describe('test IpToDecimal', () => {
+  it('should IpToDecimal number', () => {
+    expect(IpToDecimal('255.255.255.255')).to.equal(4294967295);
+    expect(IpToDecimal('255.255.255.0')).to.equal(4294967040);
   })
 })

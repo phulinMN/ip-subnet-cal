@@ -48,7 +48,7 @@ export const NetworkAdd = (str, n) => {
     if((i+1)%8 == 0 && i <=24)
       ans += '.';
   }
-  console.log(ip + ' ' + ans);
+  //console.log(ip + ' ' + ans);
   var net = binaryIpToIp(ans);
   //console.log(net);
   return net;
@@ -64,3 +64,46 @@ export const binaryIpToIp = (ip) => {
   }
   return ans;
 }
+
+export const broadcast = (str, n) => {
+  str = (IpToBinary(str)).split('.');
+  var ip = '';
+  var ans = '';
+  for(var i = 0; i < 4; i++) {
+    if(str[i] == '0') {
+      ip += '00000000';
+    }
+    else
+      ip += str[i];
+  }
+  for(var i = 0; i < 32; i++) {
+    if(i > n-1)
+      ans += '1';
+    else
+      ans += ip[i];
+    if((i+1)%8 == 0 && i <=24)
+      ans += '.';
+  }
+  var br = binaryIpToIp(ans);
+  return br;
+}
+
+export const IpToDecimal = (str) => {
+  str = (IpToBinary(str)).split('.');
+  console.log(str);
+  var ip = '';
+  str.forEach(function(element) {
+    if(element.length != 8){
+      element = '0'.repeat(8 - element.length) + element;
+    }
+    ip += element;
+    //console.log(ip);
+  });
+  console.log(ip);
+  var ans = parseInt(ip,2);
+  console.log(ans);
+  return ans;
+}
+// export const usableLength = (str, n) => {
+//   str = (IpToBinary(str)).split('.')
+// }
