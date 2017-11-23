@@ -6,8 +6,9 @@ class App extends Component {
       <div className="App">
         <div className="container">
           <div className="row">
-            <div class="page-header">
+            <div className="page-header">
               <h1>IP Subnet Calculator</h1>
+              <button className="btn-success">HELLO</button>
             </div>
           </div>
         </div>
