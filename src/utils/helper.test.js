@@ -19,7 +19,8 @@ import { plus,
   Short,
   classIp,
   cidr,
-  IpType
+  IpType,
+  classSubnet
 } from './helper';
 
 describe('test plus', () => {
@@ -167,5 +168,12 @@ describe('test IpType', () => {
   it('should IpType number', () => {
     expect(IpType("10.0.0.0")).to.equal("Private");
     expect(IpType("11.0.0.0")).to.equal("Public");
+  })
+})
+
+describe('test classSubnet', () => {
+  it('should classSubnet number', () => {
+    expect(classSubnet("A").length).to.equal(25);
+    expect(classSubnet("Any").length).to.equal(32);
   })
 })

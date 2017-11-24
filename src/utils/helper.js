@@ -245,26 +245,64 @@ export const classIp = (n) => {
     return "C";
 }
 
+export const classSubnet = (c) => {
+  var ans = [];
+  if(c == 'A') {
+    console.log("A");
+    for (var i = 8; i <= 32; i++) {
+      console.log(i);
+      ans.push(subnet(i) + " / " + i);
+      console.log(ans);
+    }
+  }
+  if(c == 'B') {
+    console.log("B");
+    for (var i = 16; i <= 32; i++) {
+      console.log(i);
+      ans.push(subnet(i) + " / " + i);
+      console.log(ans);
+    }
+  }
+  if(c == 'C') {
+    console.log("C");
+    for (var i = 24; i <= 32; i++) {
+      console.log(i);
+      ans.push(subnet(i) + " / " + i);
+      console.log(ans);
+    }
+  }
+  if(c == "Any") {
+    console.log("Any");
+    for (var i = 1; i <= 32; i++) {
+      console.log(i);
+      ans.push(subnet(i) + " / " + i);
+      console.log(ans);
+    }
+  }
+  return ans;
+    
+}
+
 export const IpType = (ip) => {
   ip = ip.split('.');
   if(ip[0] == 10){
-    console.log("Private");
+    //console.log("Private");
     return "Private";
   }
   else if(ip[0] == 172) {
     if(ip[1] >= 16 || ip[1] <= 31){
-      console.log("Private");
+      //console.log("Private");
       return "Private";
     }
   }
   else if(ip[0] == 192) {
     if(ip[1] == 168) {
-      console.log("Private");
+      //console.log("Private");
       return "Private";
     }
   }
   else{
-    console.log("Public");
+    //console.log("Public");
     return "Public";
   }
 }
