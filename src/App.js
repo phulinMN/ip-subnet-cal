@@ -45,7 +45,7 @@ class App extends Component {
                 <table>
                   <td></td>
                 </table>
-                <div>
+                <div class="input-form">
                   <label>Network Class</label>
                   <input onChange={this.handleChangeRadio} value='Any' type="radio" name="class" checked={this.state.type === 'Any'} />Any
                   <input onChange={this.handleChangeRadio} value='A' type="radio" name="class" checked={this.state.type === 'A'}/>A
@@ -136,9 +136,6 @@ class App extends Component {
                     <td>Hex ID</td>
                     <td>{ HexID(this.state.ip) }</td>
                   </tr>
-
-
-                  
                 </table>
               }
                 {/* <label>Binary IP: { this.state.bi }</label> */}
