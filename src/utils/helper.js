@@ -248,35 +248,35 @@ export const classIp = (n) => {
 export const classSubnet = (c) => {
   var ans = [];
   if(c == 'A') {
-    console.log("A");
-    for (var i = 8; i <= 32; i++) {
-      console.log(i);
-      ans.push(subnet(i) + " / " + i);
-      console.log(ans);
+    //console.log("A");
+    for (var i = 32; i >= 8; i--) {
+      //console.log(i);
+      ans.push(subnet(i));
+      //console.log(ans);
     }
   }
   if(c == 'B') {
-    console.log("B");
-    for (var i = 16; i <= 32; i++) {
-      console.log(i);
-      ans.push(subnet(i) + " / " + i);
-      console.log(ans);
+    //console.log("B");
+    for (var i = 32; i >= 16; i--) {
+      //console.log(i);
+      ans.push(subnet(i));
+      //console.log(ans);
     }
   }
   if(c == 'C') {
-    console.log("C");
-    for (var i = 24; i <= 32; i++) {
-      console.log(i);
-      ans.push(subnet(i) + " / " + i);
-      console.log(ans);
+    //console.log("C");
+    for (var i = 32; i >= 24; i--) {
+      //console.log(i);
+      ans.push(subnet(i));
+      //console.log(ans);
     }
   }
   if(c == "Any") {
-    console.log("Any");
-    for (var i = 1; i <= 32; i++) {
-      console.log(i);
-      ans.push(subnet(i) + " / " + i);
-      console.log(ans);
+    //console.log("Any");
+    for (var i = 32; i >= 1; i--) {
+      //console.log(i);
+      ans.push(subnet(i));
+      //console.log(ans);
     }
   }
   return ans;
