@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { subnet, classSubnet, IpToBinary, NetworkAdd } from './utils/helper'
+import { subnet, classSubnet, IpToBinary, NetworkAdd, usableLengthF, usableLengthL, broadcast, ResultHost,ResultUsable, WildcardMask, BinarySubnet, classIp, IpType, Short, BinaryID, HexID, IpToDecimal } from './utils/helper'
 
 class App extends Component {
   state = {
@@ -33,9 +33,8 @@ class App extends Component {
     this.setState({
       checked: true,
       bi: IpToBinary(this.state.ip),
-      n: this.state.subnet.split('/')
     });
-    console.log(this.state.subnetall.split('/'));
+    //console.log(this.state.subnetall.split('/'));
   }
   render() {
     return(
@@ -78,12 +77,67 @@ class App extends Component {
                   </tr>
                   <tr>
                     <th>Network Address</th>
-                    <th>{ NetworkAdd(this.state.ip,) }</th>
+                    <th>{ NetworkAdd(this.state.ip, this.state.n) }</th>
                   </tr>
                   <tr>
-                    <th>Binary IP</th>
-                    <th>{ this.state.bi }</th>
+                    <th>Usable Host IP Range</th>
+                    <th>{ usableLengthF(this.state.ip, this.state.n) } - { usableLengthL(this.state.ip, this.state.n) }</th>
                   </tr>
+                  <tr>
+                    <th>Broadcast Address</th>
+                    <th>{ broadcast(this.state.ip, this.state.n) }</th>
+                  </tr>
+                  <tr>
+                    <th>Total Number of Hosts</th>
+                    <th>{ ResultHost(this.state.n) }</th>
+                  </tr>
+                  <tr>
+                    <th>Number of Usable Hosts</th>
+                    <th>{ ResultUsable(this.state.n) }</th>
+                  </tr>
+                  <tr>
+                    <th>Subnet Mask</th>
+                    <th>{ subnet(this.state.n) }</th>
+                  </tr>
+                  <tr>
+                    <th>Wildcard Mask</th>
+                    <th>{ WildcardMask(this.state.n) }</th>
+                  </tr>
+                  <tr>
+                    <th>Binary Subnet Mask</th>
+                    <th>{ BinarySubnet(this.state.n) }</th>
+                  </tr>
+                  <tr>
+                    <th>IP Class</th>
+                    <th>{ classIp(this.state.n) }</th>
+                  </tr>
+                  <tr>
+                    <th>CIDR Notation</th>
+                    <th>/{ this.state.n }</th>
+                  </tr>
+                  <tr>
+                    <th>IP Type</th>
+                    <th>{ IpType(this.state.ip) }</th>
+                  </tr>
+                  <tr>
+                    <th>Short</th>
+                    <th>{ this.state.ip }/{ this.state.n }</th>
+                  </tr>
+                  <tr>
+                    <th>Binary ID</th>
+                    <th>{ BinaryID(this.state.ip) }</th>
+                  </tr>
+                  <tr>
+                    <th>Integer ID</th>
+                    <th>{ IpToDecimal(this.state.ip) }</th>
+                  </tr>
+                  <tr>
+                    <th>Hex ID</th>
+                    <th>{ HexID(this.state.ip) }</th>
+                  </tr>
+
+
+                  
                 </table>
               }
                 {/* <label>Binary IP: { this.state.bi }</label> */}

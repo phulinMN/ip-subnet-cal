@@ -16,9 +16,7 @@ import { plus,
   WildcardMask,
   BinaryID,
   HexID,
-  Short,
   classIp,
-  cidr,
   IpType,
   classSubnet
 } from './helper';
@@ -46,7 +44,7 @@ describe('test IpToBinary', () => {
 
 describe('test NetworkAdd', () => {
   it('should NetworkAdd number', () => {
-    expect(NetworkAdd('255.255.255.0', 24)).to.equal('255.255.255.0');
+    expect(NetworkAdd('158.108.12.34', 24)).to.equal('158.108.12.0');
     expect(NetworkAdd('255.255.255.255', 16)).to.equal('255.255.0.0');
   })
 })
@@ -143,24 +141,10 @@ describe('test HexID', () => {
   })
 })
 
-describe('test Short', () => {
-  it('should Short number', () => {
-    expect(Short("158.108.12.255", 24)).to.equal("158.108.12.255/24");
-    expect(Short("255.255.255.255", 5)).to.equal("255.255.255.255/5");
-  })
-})
-
 describe('test classIp', () => {
   it('should classIp number', () => {
     expect(classIp(24)).to.equal("C");
     expect(classIp(5)).to.equal("None");
-  })
-})
-
-describe('test cidr', () => {
-  it('should cidr number', () => {
-    expect(cidr(24)).to.equal("/24");
-    expect(cidr(5)).to.equal("/5");
   })
 })
 

@@ -30,28 +30,19 @@ export const IpToBinary = (ip) => {
 }
 
 export const NetworkAdd = (str, n) => {
-  str = (IpToBinary(str)).split('.');
-  var ip = '';
-  var ans = '';
-  for(var i = 0; i < 4; i++) {
-    if(str[i] == '0') {
-      ip += '00000000';
-    }
-    else
-      ip += str[i];
+  str = IpToDecimal(str);
+  str = (+str).toString(2);
+  var ip = "";
+  for(var i = 0; i < n; i++) {
+    ip += str[i];
   }
-  for(var i = 0; i < 32; i++) {
-    if(i > n-1)
-      ans += '0';
-    else
-      ans += ip[i];
-    if((i+1)%8 == 0 && i <=24)
-      ans += '.';
+  console.log(str);
+  console.log(ip);
+  for(var i = n; i < 32; i++) {
+    ip += '0';
   }
-  //console.log(ip + ' ' + ans);
-  var net = binaryIpToIp(ans);
-  //console.log(net);
-  return net;
+  ip = BinaryToIp(ip);
+  return ip;
 }
 
 export const binaryIpToIp = (ip) => {
@@ -66,26 +57,19 @@ export const binaryIpToIp = (ip) => {
 }
 
 export const broadcast = (str, n) => {
-  str = (IpToBinary(str)).split('.');
-  var ip = '';
-  var ans = '';
-  for(var i = 0; i < 4; i++) {
-    if(str[i] == '0') {
-      ip += '00000000';
-    }
-    else
-      ip += str[i];
+  str = IpToDecimal(str);
+  str = (+str).toString(2);
+  var ip = "";
+  for(var i = 0; i < n; i++) {
+    ip += str[i];
   }
-  for(var i = 0; i < 32; i++) {
-    if(i > n-1)
-      ans += '1';
-    else
-      ans += ip[i];
-    if((i+1)%8 == 0 && i <=24)
-      ans += '.';
+  console.log(str);
+  console.log(ip);
+  for(var i = n; i < 32; i++) {
+    ip += '1';
   }
-  var br = binaryIpToIp(ans);
-  return br;
+  ip = BinaryToIp(ip);
+  return ip;
 }
 
 export const IpToDecimal = (str) => {
@@ -222,16 +206,6 @@ export const HexID = (str) => {
   str = IpToDecimal(str);
   str = (+str).toString(16);
   return str;
-}
-
-export const Short = (str, n) => {
-  str = str + '/' + n;
-  return str;
-}
-
-export const cidr = (n) => {
-  n = '/' + n;
-  return n;
 }
 
 export const classIp = (n) => {
