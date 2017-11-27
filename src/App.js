@@ -6,8 +6,7 @@ class App extends Component {
     subnetall: classSubnet('A'),
     type: 'A',
     ip: '0.0.0.0',
-    n: '1',
-    bi: '11111111.11111111.00000000.00000000',
+    n: '0',
     checked: false,
   }
   handleChangeSelect = (e) => {
@@ -27,12 +26,11 @@ class App extends Component {
     this.setState({
       ip: e.target.value
     });
-    console.log(e.target.value);
+    //console.log(e.target.value);
   }
   handleClick = (e) => {
     this.setState({
-      checked: true,
-      bi: IpToBinary(this.state.ip),
+      checked: true
     });
     //console.log(this.state.subnetall.split('/'));
   }
