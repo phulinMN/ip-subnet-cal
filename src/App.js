@@ -4,9 +4,9 @@ import { subnet, classSubnet, IpToBinary, NetworkAdd, usableLengthF, usableLengt
 class App extends Component {
   state = {
     subnetall: classSubnet('A'),
-    type: 'A',
+    type: 'Any',
     ip: '0.0.0.0',
-    n: '0',
+    n: '32',
     checked: false,
   }
   handleChangeSelect = (e) => {
@@ -42,12 +42,15 @@ class App extends Component {
             <div className="page-header">
               <h1>IP Subnet Calculator</h1>
               <div>
+                <table>
+                  <td></td>
+                </table>
                 <div>
                   <label>Network Class</label>
-                  <input onChange={this.handleChangeRadio} value='A' type="radio" name="class" />A
-                  <input onChange={this.handleChangeRadio} value='B' type="radio" name="class" />B
-                  <input onChange={this.handleChangeRadio} value='C' type="radio" name="class" />C
-                  <input onChange={this.handleChangeRadio} value='Any' type="radio" name="class" />Any
+                  <input onChange={this.handleChangeRadio} value='Any' type="radio" name="class" checked={this.state.type === 'Any'} />Any
+                  <input onChange={this.handleChangeRadio} value='A' type="radio" name="class" checked={this.state.type === 'A'}/>A
+                  <input onChange={this.handleChangeRadio} value='B' type="radio" name="class" checked={this.state.type === 'B'}/>B
+                  <input onChange={this.handleChangeRadio} value='C' type="radio" name="class" checked={this.state.type === 'C'}/>C
                 </div>
                 <div id="select">
                   <label>Subnet</label>
@@ -70,68 +73,68 @@ class App extends Component {
                 this.state.checked &&
                <table style={{ width:'100%' }}>
                   <tr>
-                    <th>IP Address</th>
-                    <th>{ this.state.ip }</th>
+                    <td>IP Address</td>
+                    <td>{ this.state.ip }</td>
                   </tr>
                   <tr>
-                    <th>Network Address</th>
-                    <th>{ NetworkAdd(this.state.ip, this.state.n) }</th>
+                    <td>Network Address</td>
+                    <td>{ NetworkAdd(this.state.ip, this.state.n) }</td>
                   </tr>
                   <tr>
-                    <th>Usable Host IP Range</th>
-                    <th>{ usableLengthF(this.state.ip, this.state.n) } - { usableLengthL(this.state.ip, this.state.n) }</th>
+                    <td>Usable Host IP Range</td>
+                    <td>{ usableLengthF(this.state.ip, this.state.n) } - { usableLengthL(this.state.ip, this.state.n) }</td>
                   </tr>
                   <tr>
-                    <th>Broadcast Address</th>
-                    <th>{ broadcast(this.state.ip, this.state.n) }</th>
+                    <td>Broadcast Address</td>
+                    <td>{ broadcast(this.state.ip, this.state.n) }</td>
                   </tr>
                   <tr>
-                    <th>Total Number of Hosts</th>
-                    <th>{ ResultHost(this.state.n) }</th>
+                    <td>Total Number of Hosts</td>
+                    <td>{ ResultHost(this.state.n) }</td>
                   </tr>
                   <tr>
-                    <th>Number of Usable Hosts</th>
-                    <th>{ ResultUsable(this.state.n) }</th>
+                    <td>Number of Usable Hosts</td>
+                    <td>{ ResultUsable(this.state.n) }</td>
                   </tr>
                   <tr>
-                    <th>Subnet Mask</th>
-                    <th>{ subnet(this.state.n) }</th>
+                    <td>Subnet Mask</td>
+                    <td>{ subnet(this.state.n) }</td>
                   </tr>
                   <tr>
-                    <th>Wildcard Mask</th>
-                    <th>{ WildcardMask(this.state.n) }</th>
+                    <td>Wildcard Mask</td>
+                    <td>{ WildcardMask(this.state.n) }</td>
                   </tr>
                   <tr>
-                    <th>Binary Subnet Mask</th>
-                    <th>{ BinarySubnet(this.state.n) }</th>
+                    <td>Binary Subnet Mask</td>
+                    <td>{ BinarySubnet(this.state.n) }</td>
                   </tr>
                   <tr>
-                    <th>IP Class</th>
-                    <th>{ classIp(this.state.n) }</th>
+                    <td>IP Class</td>
+                    <td>{ classIp(this.state.n) }</td>
                   </tr>
                   <tr>
-                    <th>CIDR Notation</th>
-                    <th>/{ this.state.n }</th>
+                    <td>CIDR Notation</td>
+                    <td>/{ this.state.n }</td>
                   </tr>
                   <tr>
-                    <th>IP Type</th>
-                    <th>{ IpType(this.state.ip) }</th>
+                    <td>IP Type</td>
+                    <td>{ IpType(this.state.ip) }</td>
                   </tr>
                   <tr>
-                    <th>Short</th>
-                    <th>{ this.state.ip }/{ this.state.n }</th>
+                    <td>Short</td>
+                    <td>{ this.state.ip }/{ this.state.n }</td>
                   </tr>
                   <tr>
-                    <th>Binary ID</th>
-                    <th>{ BinaryID(this.state.ip) }</th>
+                    <td>Binary ID</td>
+                    <td>{ BinaryID(this.state.ip) }</td>
                   </tr>
                   <tr>
-                    <th>Integer ID</th>
-                    <th>{ IpToDecimal(this.state.ip) }</th>
+                    <td>Integer ID</td>
+                    <td>{ IpToDecimal(this.state.ip) }</td>
                   </tr>
                   <tr>
-                    <th>Hex ID</th>
-                    <th>{ HexID(this.state.ip) }</th>
+                    <td>Hex ID</td>
+                    <td>{ HexID(this.state.ip) }</td>
                   </tr>
 
 
