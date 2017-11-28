@@ -299,10 +299,9 @@ export const genBit = (str, n) => {
 
 export const AllPossibleNetAdd = (ip, n) => {
   var net = [];
-  var i = 0;
-  var r = 0;
+  var i = 0,r = 0, a = 0;
   if(n >= 24){
-    var a = genBit((+IpToDecimal(ip)).toString(2), 24);
+    a = genBit((+IpToDecimal(ip)).toString(2), 24);
     a = parseInt(a, 2);
     for(var i = 0; r < 256; i++) {
       console.log(r);
@@ -312,11 +311,31 @@ export const AllPossibleNetAdd = (ip, n) => {
     }
     console.log(net);
   }
-  // if(n >= 16){
-    
-  // }
-  // if(n >= 8){
-    
-  // }
+  else if(n < 24 && n >= 16){
+    a = genBit((+IpToDecimal(ip)).toString(2), 16);
+    a = parseInt(a, 2);
+    for(var i = 0; r < 2**16; i++) {
+      net.push(DecimalToIp(r+a));
+      r = (i+1)*2**(32-n);
+    }
+  }
+  else if(n < 16 && n >= 8){
+    a = genBit((+IpToDecimal(ip)).toString(2), 8);
+    a = parseInt(a, 2);
+    for(var i = 0; r < 2**24; i++) {
+      net.push(DecimalToIp(r+a));
+      r = (i+1)*2**(32-n);
+    }
+  }
+  else {
+    for(var i = 0; r < 255; i++) {
+      a = (r).toString(2)
+      a = "0".repeat(8-a.length) + a + "0".repeat(24);
+      net.push(BinaryToIp(a));
+      r = (i+1)*2**(8-n);
+    }
+    console.log(net);
+    console.log(net.length);
+  }
   return net;
 }
