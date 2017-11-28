@@ -10,6 +10,7 @@ import { plus,
   BinaryToIp,
   usableLengthF,
   usableLengthL,
+  usableLength,
   ResultHost,
   ResultUsable,
   BinarySubnet,
@@ -45,7 +46,7 @@ describe('test IpToBinary', () => {
 describe('test NetworkAdd', () => {
   it('should NetworkAdd number', () => {
     expect(NetworkAdd('158.108.12.34', 24)).to.equal('158.108.12.0');
-    expect(NetworkAdd('255.255.255.255', 16)).to.equal('255.255.0.0');
+    expect(NetworkAdd('158.108.12.34', 16)).to.equal('158.108.0.0');
   })
 })
 
@@ -88,6 +89,8 @@ describe('test usableLengthF', () => {
   it('should usableLengthF number', () => {
     expect(usableLengthF('255.255.255.0', 24)).to.equal('255.255.255.1');
     expect(usableLengthF('158.108.12.34', 24)).to.equal('158.108.12.1');
+    expect(usableLengthF('255.255.255.252', 30)).to.equal('255.255.255.253');
+    expect(usableLengthF('255.255.255.253', 28)).to.equal('255.255.255.241');
   })
 })
 
@@ -95,6 +98,18 @@ describe('test usableLengthL', () => {
   it('should usableLengthL number', () => {
     expect(usableLengthL('255.255.255.0', 24)).to.equal('255.255.255.254');
     expect(usableLengthL('158.108.12.34', 24)).to.equal('158.108.12.254');
+    expect(usableLengthL('255.255.255.252', 30)).to.equal('255.255.255.254');
+    expect(usableLengthL('255.255.255.253', 30)).to.equal('255.255.255.254');
+    expect(usableLengthL('255.255.255.253', 28)).to.equal('255.255.255.254');
+  })
+})
+
+describe('test usableLength', () => {
+  it('should usableLength number', () => {
+    expect(usableLength('255.255.255.0', 24)).to.equal('255.255.255.1 - 255.255.255.254');
+    expect(usableLength('158.108.12.34', 24)).to.equal('158.108.12.1 - 158.108.12.254');
+    expect(usableLength('255.255.255.253', 30)).to.equal('255.255.255.253 - 255.255.255.254');
+    expect(usableLength('255.255.255.253', 28)).to.equal('255.255.255.241 - 255.255.255.254');
   })
 })
 

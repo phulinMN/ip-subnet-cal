@@ -36,8 +36,6 @@ export const NetworkAdd = (str, n) => {
   for(var i = 0; i < n; i++) {
     ip += str[i];
   }
-  console.log(str);
-  console.log(ip);
   for(var i = n; i < 32; i++) {
     ip += '0';
   }
@@ -63,8 +61,6 @@ export const broadcast = (str, n) => {
   for(var i = 0; i < n; i++) {
     ip += str[i];
   }
-  console.log(str);
-  console.log(ip);
   for(var i = n; i < 32; i++) {
     ip += '1';
   }
@@ -87,7 +83,6 @@ export const IpToDecimal = (str) => {
 
 export const DecimalToIp = (str) => {
   str = (+str).toString(2);
-  //console.log(str);
   var ip = '';
   var ans = '';
   for(var i = 0; i < 32; i++) {
@@ -131,6 +126,9 @@ export const usableLengthF = (str, n) => {
   num = parseInt(num, 2);
   num += 1;
   num = (+num).toString(2);
+  if(num.length != 32-n){
+    num = "0".repeat(32-n-num.length) + num;
+  }
   ip += num;
   ip = BinaryToIp(ip);
   return ip;
@@ -147,13 +145,27 @@ export const usableLengthL = (str, n) => {
   for(var i = n; i < 32; i++) {
     num += '1';
   }
+  console.log(ip);
   num = parseInt(num, 2);
   num -= 1;
   num = (+num).toString(2);
+  console.log(num + " " + num.length);
   ip += num;
+  console.log(ip + " " + ip.length);
   ip = BinaryToIp(ip);
   return ip;
 }
+
+export const usableLength = (str, n) => {
+  var a = usableLengthF(str,n);
+  var b = usableLengthL(str,n);
+  console.log(a + " - " + b);
+  if(n >= 31)
+    return "None";
+  else
+    return a + " - " + b;
+}
+
 
 export const ResultHost = (n) => {
   var num = 2**(32-n);
@@ -180,7 +192,6 @@ export const BinarySubnet = (n) => {
       ans += '.';
     }
   }
-  //console.log(ans);
   return ans;
 }
 
@@ -189,9 +200,7 @@ export const WildcardMask = (n) => {
   var ans = "";
   str += "0".repeat(n);
   str += "1".repeat(32-n);
-  //console.log(str);
   str = BinaryToIp(str);
-  //console.log(str);
   return str;
 }
 
@@ -222,35 +231,23 @@ export const classIp = (n) => {
 export const classSubnet = (c) => {
   var ans = [];
   if(c == 'A') {
-    //console.log("A");
     for (var i = 32; i >= 8; i--) {
-      //console.log(i);
       ans.push(subnet(i));
-      //console.log(ans);
     }
   }
   if(c == 'B') {
-    //console.log("B");
     for (var i = 32; i >= 16; i--) {
-      //console.log(i);
       ans.push(subnet(i));
-      //console.log(ans);
     }
   }
   if(c == 'C') {
-    //console.log("C");
     for (var i = 32; i >= 24; i--) {
-      //console.log(i);
       ans.push(subnet(i));
-      //console.log(ans);
     }
   }
   if(c == "Any") {
-    //console.log("Any");
     for (var i = 32; i >= 1; i--) {
-      //console.log(i);
       ans.push(subnet(i));
-      //console.log(ans);
     }
   }
   return ans;
@@ -260,23 +257,19 @@ export const classSubnet = (c) => {
 export const IpType = (ip) => {
   ip = ip.split('.');
   if(ip[0] == 10){
-    //console.log("Private");
     return "Private";
   }
   else if(ip[0] == 172) {
     if(ip[1] >= 16 || ip[1] <= 31){
-      //console.log("Private");
       return "Private";
     }
   }
   else if(ip[0] == 192) {
     if(ip[1] == 168) {
-      //console.log("Private");
       return "Private";
     }
   }
   else{
-    //console.log("Public");
     return "Public";
   }
 }
