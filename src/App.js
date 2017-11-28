@@ -41,37 +41,42 @@ class App extends Component {
           <div className="row">
             <div className="page-header">
               <h1>IP Subnet Calculator</h1>
-              <div>
-                <table>
-                  <td></td>
-                </table>
-                <div class="input-form">
-                  <label>Network Class</label>
-                  <input onChange={this.handleChangeRadio} value='Any' type="radio" name="class" checked={this.state.type === 'Any'} />Any
-                  <input onChange={this.handleChangeRadio} value='A' type="radio" name="class" checked={this.state.type === 'A'}/>A
-                  <input onChange={this.handleChangeRadio} value='B' type="radio" name="class" checked={this.state.type === 'B'}/>B
-                  <input onChange={this.handleChangeRadio} value='C' type="radio" name="class" checked={this.state.type === 'C'}/>C
+              <div class="input-form">
+                <div className="row">
+                  <div className="col col-xs-4">Network Class</div>
+                  <div className="col col-xs-8">
+                    <input onChange={this.handleChangeRadio} value='Any' type="radio" name="class" checked={this.state.type === 'Any'} />Any
+                    <input onChange={this.handleChangeRadio} value='A' type="radio" name="class" checked={this.state.type === 'A'}/>A
+                    <input onChange={this.handleChangeRadio} value='B' type="radio" name="class" checked={this.state.type === 'B'}/>B
+                    <input onChange={this.handleChangeRadio} value='C' type="radio" name="class" checked={this.state.type === 'C'}/>C
+                  </div>
                 </div>
-                <div id="select">
-                  <label>Subnet</label>
-                  <select onChange={this.handleChangeSelect}>
-                    { this.state.subnetall.map((sub, i) =>
-                      <option value={(32-i)}>
-                        { sub + ' / ' + (32-i) }
-                      </option>
-                    )}
-                  </select>
+                <div className="row" id="select">
+                  <div className="col col-xs-4">Subnet</div>
+                  <div className="col col-xs-8">
+                    <select onChange={this.handleChangeSelect}>
+                      { this.state.subnetall.map((sub, i) =>
+                        <option value={(32-i)}>
+                          { sub + ' / ' + (32-i) }
+                        </option>
+                      )}
+                    </select>
+                  </div>
                 </div>
-                <div id="ip-address">
-                  <label>IP Address</label>
-                  <input onChange={this.handleChangeInput} type="text" name="ip-address"/>
-                  <button onClick={this.handleClick} className="btn btn-success">submit</button>
+                <div className="row" id="ip-address">
+                  <div className="col col-xs-4">IP Address</div>
+                  <div className="col col-xs-8">
+                    <input onChange={this.handleChangeInput} type="text" name="ip-address"/>
+                    <button onClick={this.handleClick} className="btn btn-success">submit</button>
+                  </div>
                 </div>
               </div>
-              <div>
-              {
-                this.state.checked &&
-               <table style={{ width:'100%' }}>
+            </div>
+            <div>
+            {
+              this.state.checked &&
+              <div className="table-result">
+                <table style={{ width:'100%' }}>
                   <tr>
                     <td>IP Address</td>
                     <td>{ this.state.ip }</td>
@@ -127,7 +132,7 @@ class App extends Component {
                   <tr>
                     <td>Binary ID</td>
                     <td>{ BinaryID(this.state.ip) }</td>
-                  </tr>
+                    </tr>
                   <tr>
                     <td>Integer ID</td>
                     <td>{ IpToDecimal(this.state.ip) }</td>
@@ -137,12 +142,10 @@ class App extends Component {
                     <td>{ HexID(this.state.ip) }</td>
                   </tr>
                 </table>
-              }
-                {/* <label>Binary IP: { this.state.bi }</label> */}
               </div>
-            </div>
+            }
+            </div>  
           </div>
-          {/* <button className="btn btn-success">HELLO</button> */}
         </div>
       </div>
     );

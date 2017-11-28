@@ -5,7 +5,9 @@ body {
   text-align: center;
 }
 
-.input-form {
-  display: flex;
-  align-content: space-between;
+.col {
+  text-align: left;
+}
+.table-result {
+  text-align: left;
 }
