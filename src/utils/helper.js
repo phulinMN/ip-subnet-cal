@@ -8,7 +8,7 @@ export const subnet = (n) => {
   var ip = '';
   for(var i = 1; i <= 32; i++) {
     num += str[i-1];
-    if((+i)%8 == 0){
+    if((+i)%8 === 0){
       ip += parseInt(+num,2);
       if ((+i) <= 24)
         ip += '.';
@@ -23,7 +23,7 @@ export const IpToBinary = (ip) => {
   var c = '';
   for(var i = 0; i < 4; i++){
     c += (+x[i]).toString(2);
-    if (i != 3)
+    if (i !== 3)
       c += '.';
   }
   return c;
@@ -48,7 +48,7 @@ export const binaryIpToIp = (ip) => {
   var ans = '';
   for(var i = 0; i < 4; i++) {
     ans += parseInt((+str[i]), 2);
-    if (i != 3)
+    if (i !== 3)
       ans += '.';
   }
   return ans;
@@ -72,7 +72,7 @@ export const IpToDecimal = (str) => {
   str = (IpToBinary(str)).split('.');
   var ip = '';
   str.forEach(function(element) {
-    if(element.length != 8){
+    if(element.length !== 8){
       element = '0'.repeat(8 - element.length) + element;
     }
     ip += element;
@@ -87,7 +87,7 @@ export const DecimalToIp = (str) => {
   var ans = '';
   for(var i = 0; i < 32; i++) {
     ip += str[i];
-    if(i%8 == 7){
+    if(i%8 === 7){
       ans += parseInt(ip, 2);
       ip = '';
       if((+i) <= 23)
@@ -102,7 +102,7 @@ export const BinaryToIp = (str) => {
   var num = "";
   for(var i = 0; i < 32; i++) {
       num += str[i];
-      if(i%8 == 7) {
+      if(i%8 === 7) {
         ip += parseInt(num, 2);
         num = "";
         if((+i) <= 23)
@@ -117,21 +117,26 @@ export const usableLengthF = (str, n) => {
   str = (+str).toString(2);
   var num = '';
   var ip = '';
-  for(var i = 0; i < n; i++) {
-    ip += str[i];
+  if(n >= 31){
+    return '0';
   }
-  for(var i = n; i < 32; i++) {
-    num += '0';
+  else {
+    for(var i = 0; i < n; i++) {
+      ip += str[i];
+    }
+    for(var i = n; i < 32; i++) {
+      num += '0';
+    }
+    num = parseInt(num, 2);
+    num += 1;
+    num = (+num).toString(2);
+    if(num.length !== (32-n)){
+      num = "0".repeat(32-n-num.length) + num;
+    }
+    ip += num;
+    ip = BinaryToIp(ip);
+    return ip;
   }
-  num = parseInt(num, 2);
-  num += 1;
-  num = (+num).toString(2);
-  if(num.length != 32-n){
-    num = "0".repeat(32-n-num.length) + num;
-  }
-  ip += num;
-  ip = BinaryToIp(ip);
-  return ip;
 }
 
 export const usableLengthL = (str, n) => {
@@ -139,31 +144,40 @@ export const usableLengthL = (str, n) => {
   str = (+str).toString(2);
   var num = '';
   var ip = '';
-  for(var i = 0; i < n; i++) {
-    ip += str[i];
+  if(n >= 31) {
+    return '0';
   }
-  for(var i = n; i < 32; i++) {
-    num += '1';
+  else {
+    for(var i = 0; i < n; i++) {
+      ip += str[i];
+    }
+    for(var i = n; i < 32; i++) {
+      num += '1';
+    }
+    //console.log(ip);
+    num = parseInt(num, 2);
+    num -= 1;
+    num = (+num).toString(2);
+    //console.log(num + " " + num.length);
+    ip += num;
+    //console.log(ip + " " + ip.length);
+    ip = BinaryToIp(ip);
+    return ip;
   }
-  console.log(ip);
-  num = parseInt(num, 2);
-  num -= 1;
-  num = (+num).toString(2);
-  console.log(num + " " + num.length);
-  ip += num;
-  console.log(ip + " " + ip.length);
-  ip = BinaryToIp(ip);
-  return ip;
 }
 
 export const usableLength = (str, n) => {
   var a = usableLengthF(str,n);
   var b = usableLengthL(str,n);
-  console.log(a + " - " + b);
-  if(n >= 31)
+  //console.log(a + " - " + b);
+  if(n >= 31) {
+    // console.log("None");
     return "None";
-  else
+  }
+  else {
+    // console.log(a + " - " + b);
     return a + " - " + b;
+  }
 }
 
 
@@ -188,7 +202,7 @@ export const BinarySubnet = (n) => {
   str += "0".repeat(32-n);
   for(var i = 0; i < 32; i++) {
     ans += str[i];
-    if(i%8 == 7 && i < 24) {
+    if(i%8 === 7 && i < 24) {
       ans += '.';
     }
   }
@@ -197,7 +211,6 @@ export const BinarySubnet = (n) => {
 
 export const WildcardMask = (n) => {
   var str = "";
-  var ans = "";
   str += "0".repeat(n);
   str += "1".repeat(32-n);
   str = BinaryToIp(str);
@@ -230,46 +243,72 @@ export const classIp = (n) => {
 
 export const classSubnet = (c) => {
   var ans = [];
-  if(c == 'A') {
+  if(c === 'A') {
     for (var i = 32; i >= 8; i--) {
       ans.push(subnet(i));
     }
   }
-  if(c == 'B') {
+  if(c === 'B') {
     for (var i = 32; i >= 16; i--) {
       ans.push(subnet(i));
     }
   }
-  if(c == 'C') {
+  if(c === 'C') {
     for (var i = 32; i >= 24; i--) {
       ans.push(subnet(i));
     }
   }
-  if(c == "Any") {
+  if(c === "Any") {
     for (var i = 32; i >= 1; i--) {
       ans.push(subnet(i));
     }
   }
   return ans;
-    
 }
 
 export const IpType = (ip) => {
   ip = ip.split('.');
-  if(ip[0] == 10){
+  if(ip[0] === "10"){
     return "Private";
   }
-  else if(ip[0] == 172) {
-    if(ip[1] >= 16 || ip[1] <= 31){
+  else if(ip[0] === "172") {
+    if(parseInt(ip[1], 2) >= 16 || parseInt(ip[1], 2) <= 31){
       return "Private";
     }
   }
-  else if(ip[0] == 192) {
-    if(ip[1] == 168) {
+  else if(ip[0] === "192") {
+    if(ip[1] === "168") {
       return "Private";
     }
   }
   else{
     return "Public";
   }
+}
+
+export const genBit = (str, n) => {
+  var ans = "";
+  for (var i = 0; i < n; i++ ) {
+    ans += str[i];
+  }
+  for(var i = n; i < 32; i++) {
+    ans += '0';
+  }
+  return ans;
+}
+
+export const AllPossibleNetAdd = (ip, n) => {
+  var net = [];
+  if(n >= 24){
+    // var a = genBit((+IpToDecimal(ip)).toString(2), 24);
+    net.push(genBit((+IpToDecimal(ip)).toString(2), 24));
+    console.log(net[0]);
+  }
+  // if(n >= 16){
+    
+  // }
+  // if(n >= 8){
+    
+  // }
+  return "1";
 }

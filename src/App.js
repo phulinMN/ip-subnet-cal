@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { subnet, classSubnet, IpToBinary, NetworkAdd, usableLengthF, usableLengthL, broadcast, ResultHost,ResultUsable, WildcardMask, BinarySubnet, classIp, IpType, Short, BinaryID, HexID, IpToDecimal } from './utils/helper'
+import { subnet, classSubnet, IpToBinary, NetworkAdd, usableLength, broadcast, ResultHost,ResultUsable, WildcardMask, BinarySubnet, classIp, IpType, Short, BinaryID, HexID, IpToDecimal } from './utils/helper'
 
 class App extends Component {
   state = {
@@ -98,7 +98,7 @@ class App extends Component {
                         </tr>
                         <tr>
                           <td>Usable Host IP Range</td>
-                          <td>{ usableLengthF(this.state.ip, this.state.n) } - { usableLengthL(this.state.ip, this.state.n) }</td>
+                          <td>{ usableLength(this.state.ip, this.state.n) }</td>
                         </tr>
                         <tr>
                           <td>Broadcast Address</td>
