@@ -299,10 +299,18 @@ export const genBit = (str, n) => {
 
 export const AllPossibleNetAdd = (ip, n) => {
   var net = [];
+  var i = 0;
+  var r = 0;
   if(n >= 24){
-    // var a = genBit((+IpToDecimal(ip)).toString(2), 24);
-    net.push(genBit((+IpToDecimal(ip)).toString(2), 24));
-    console.log(net[0]);
+    var a = genBit((+IpToDecimal(ip)).toString(2), 24);
+    a = parseInt(a, 2);
+    for(var i = 0; r < 256; i++) {
+      console.log(r);
+      net.push(DecimalToIp(r+a));
+      console.log((net[i]));
+      r = (i+1)*2**(32-n);
+    }
+    console.log(net);
   }
   // if(n >= 16){
     
@@ -310,5 +318,5 @@ export const AllPossibleNetAdd = (ip, n) => {
   // if(n >= 8){
     
   // }
-  return "1";
+  return net;
 }

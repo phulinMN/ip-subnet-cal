@@ -192,7 +192,8 @@ describe('test genBit', () => {
 
 describe('test AllPossibleNetAdd', () => {
   it('should AllPossibleNetAdd number', () => {
-    expect(AllPossibleNetAdd("158.108.12.34", 26)).to.equal("1");
+    expect(AllPossibleNetAdd("158.108.12.34", 26).length).to.equal(4);
+    expect(AllPossibleNetAdd("158.108.12.34", 28).length).to.equal(16);
     // expect(AllPossibleNetAdd("1111111111", 8)).to.equal("11111111000000000000000000000000");
   })
 })
