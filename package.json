@@ -8,10 +8,15 @@
   "dependencies": {
     "antd": "^2.13.10",
     "chai": "^4.1.2",
+    "element-react": "^1.4.3",
+    "elemental": "^0.6.1",
     "material-ui": "^0.19.4",
-    "react": "^16.1.1",
+    "react": "^16.2.0",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-bootstrap": "^0.31.5",
-    "react-dom": "^16.1.1"
+    "react-dom": "^16.2.0",
+    "semantic-ui": "^2.2.13",
+    "semantic-ui-react": "^0.77.0"
   },
   "scripts": {
     "start": "react-scripts start",

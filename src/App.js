@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import { subnet, classSubnet, IpToBinary, NetworkAdd, usableLength, broadcast, ResultHost,ResultUsable, WildcardMask, BinarySubnet, classIp, IpType, Short, BinaryID, HexID, IpToDecimal, AllPossibleNetAdd, IsIpv4} from './utils/helper'
+import { Button, Icon, Radio, Input, Select, Grid, Form } from 'semantic-ui-react'
+
+const subnetToSelectArray = (subnetArray) => {
+  return subnetArray.map((subnet, n) => {
+    return {
+      text: subnet + " / " + (32 - n),
+      value: 32 - n
+    }
+  });
+} 
 
 class App extends Component {
   state = {
-    subnetall: classSubnet('A'),
+    subnetall: classSubnet('Any'),
     type: 'Any',
     ip: '0.0.0',
     n: '32',
@@ -15,10 +25,10 @@ class App extends Component {
       subnet: subnet(this.state.n)
     });
   }
-  handleChangeRadio = (e) => {
+  handleChangeRadio = (e, { value }) => {
     this.setState({
-      type: e.target.value,
-      subnetall: classSubnet(e.target.value)
+      type: value,
+      subnetall: classSubnet(value)
     });
   }
   handleChangeInput = (e) => {
@@ -28,12 +38,14 @@ class App extends Component {
     console.log(e.target.value);
   }
   handleClick = (e) => {
+    console.log(this.state.ip)
     this.setState({
       checked: true,
-      ipUse: this.state.ip
+      ipUse : this.state.ip
     });
   }
   render() {
+    // console.log(this.state.n)
     return(
       <div className="App">
         <div className="container">
@@ -42,34 +54,69 @@ class App extends Component {
             <div className="page-header">
               <label id="text-header">IP Subnet Calculator</label>
               <div class="input-form">
-                <div className="row">
-                  <div className="col col-xs-3 col-xs-offset-3">Network Class</div>
-                  <div className="col col-xs-3">
-                    <input onChange={this.handleChangeRadio} value='Any' type="radio" name="class" checked={this.state.type === 'Any'} />Any
-                    <input onChange={this.handleChangeRadio} value='A' type="radio" name="class" checked={this.state.type === 'A'}/>A
-                    <input onChange={this.handleChangeRadio} value='B' type="radio" name="class" checked={this.state.type === 'B'}/>B
-                    <input onChange={this.handleChangeRadio} value='C' type="radio" name="class" checked={this.state.type === 'C'}/>C
-                  </div>
-                </div>
-                <div className="row" id="select">
-                  <div className="col col-xs-3 col-xs-offset-3">Subnet</div>
-                  <div className="col col-xs-3">
-                    <select onChange={this.handleChangeSelect}>
-                      { this.state.subnetall.map((sub, i) =>
-                        <option value={(32-i)}>
-                          { sub + ' / ' + (32-i) }
-                        </option>
-                      )}
-                    </select>
-                  </div>
-                </div>
-                <div className="row" id="ip-address">
-                  <div className="col col-xs-3 col-xs-offset-3">IP Address</div>
-                  <div className="col col-xs-3">
-                    <input onChange={this.handleChangeInput} type="text" name="ip-address"/>
-                    <button className="btn btn-success" disabled={!IsIpv4(this.state.ip)} onClick={this.handleClick}>submit</button>
-                  </div>
-                </div>
+              <Grid>
+                <Grid.Row centered columns={6}>
+                  <Grid.Column>Network Class</Grid.Column>
+                  <Grid.Column>
+                  <Form>
+                    <Form.Field>
+                      <Radio
+                        label='Any'
+                        name='radio'
+                        value='Any'
+                        checked={this.state.type === 'Any'}
+                        onChange={this.handleChangeRadio}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                    <Radio
+                        label='A'
+                        name='radio'
+                        value='A'
+                        checked={this.state.type === 'A'}
+                        onChange={this.handleChangeRadio}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                    <Radio
+                        label='B'
+                        name='radio'
+                        value='B'
+                        checked={this.state.type === 'B'}
+                        onChange={this.handleChangeRadio}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                    <Radio
+                        label='C'
+                        name='radio'
+                        value='C'
+                        checked={this.state.type === 'C'}
+                        onChange={this.handleChangeRadio}
+                      />
+                    </Form.Field>
+                  </Form>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row centered columns={6}>
+                  <Grid.Column>Subnet</Grid.Column>
+                  <Grid.Column>
+                    <Select placeholder="Select Subnet" options={subnetToSelectArray(this.state.subnetall)} />
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row centered columns={6}>
+                  <Grid.Column>IP Address</Grid.Column>
+                  <Grid.Column>
+                    <Input placeholder="IPV4 example: 158.104.14.15" onChange={this.handleChangeInput} type="text" name="ip-address"/>
+                    <Button primary disabled={!IsIpv4(this.state.ip)} onClick={this.handleClick} animated>
+                      <Button.Content visible>Calculate</Button.Content>
+                      <Button.Content hidden>
+                        <Icon name='right arrow' />
+                      </Button.Content>
+                    </Button>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
               </div>
             </div>
 
