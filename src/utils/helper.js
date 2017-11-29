@@ -57,13 +57,13 @@ export const binaryIpToIp = (ip) => {
 export const broadcast = (str, n) => {
   str = IpToDecimal(str);
   str = (+str).toString(2);
+  if(str.length !== 32)
+    str = "0".repeat(32-str.length) + str;
   var ip = "";
   for(var i = 0; i < n; i++) {
     ip += str[i];
   }
-  for(var i = n; i < 32; i++) {
-    ip += '1';
-  }
+  ip = ip + "1".repeat(32-n);
   ip = BinaryToIp(ip);
   return ip;
 }
@@ -154,13 +154,10 @@ export const usableLengthL = (str, n) => {
     for(var i = n; i < 32; i++) {
       num += '1';
     }
-    //console.log(ip);
     num = parseInt(num, 2);
     num -= 1;
     num = (+num).toString(2);
-    //console.log(num + " " + num.length);
     ip += num;
-    //console.log(ip + " " + ip.length);
     ip = BinaryToIp(ip);
     return ip;
   }
@@ -169,13 +166,10 @@ export const usableLengthL = (str, n) => {
 export const usableLength = (str, n) => {
   var a = usableLengthF(str,n);
   var b = usableLengthL(str,n);
-  //console.log(a + " - " + b);
   if(n >= 31) {
-    // console.log("None");
     return "None";
   }
   else {
-    // console.log(a + " - " + b);
     return a + " - " + b;
   }
 }
@@ -304,12 +298,9 @@ export const AllPossibleNetAdd = (ip, n) => {
     a = genBit((+IpToDecimal(ip)).toString(2), 24);
     a = parseInt(a, 2);
     for(var i = 0; r < 256; i++) {
-      console.log(r);
       net.push(DecimalToIp(r+a));
-      console.log((net[i]));
       r = (i+1)*2**(32-n);
     }
-    console.log(net);
   }
   else if(n < 24 && n >= 16){
     a = genBit((+IpToDecimal(ip)).toString(2), 16);
@@ -334,8 +325,32 @@ export const AllPossibleNetAdd = (ip, n) => {
       net.push(BinaryToIp(a));
       r = (i+1)*2**(8-n);
     }
-    console.log(net);
-    console.log(net.length);
   }
   return net;
 }
+
+export const AllPossibleLength = (ip, n) => {
+  var begin = [];
+  var last = [];
+  var posLength = [];
+  for(var i = 0; i < ip.length; i++) {
+    begin.push(DecimalToIp(IpToDecimal(ip[i])+1));
+    ip[i] = broadcast(ip[i], n);
+    last.push(DecimalToIp(IpToDecimal(ip[i])-1));
+    posLength.push(begin + ' - ' + last);
+  }
+  return posLength;
+}
+
+export const broadcastPos =  (ip, n) => {
+  var pos = [];
+  for(var i = 0; i < ip.length; i++) {
+    pos.push(broadcast(ip[i], n));
+  }
+  console.log(ip);
+  console.log(pos);
+  return pos;
+}
+
+
+

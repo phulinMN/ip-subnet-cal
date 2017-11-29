@@ -21,7 +21,9 @@ import { plus,
   IpType,
   classSubnet,
   genBit,
-  AllPossibleNetAdd
+  AllPossibleNetAdd,
+  AllPossibleLength,
+  broadcastPos
 } from './helper';
 
 describe('test plus', () => {
@@ -75,6 +77,7 @@ describe('test broadcast', () => {
 
 describe('test IpToDecimal', () => {
   it('should IpToDecimal number', () => {
+    expect(IpToDecimal('32.0.0.0')).to.equal(2**29);
     expect(IpToDecimal('255.255.255.0')).to.equal(4294967040);
     expect(IpToDecimal('255.255.255.255')).to.equal(4294967295);
   })
@@ -199,5 +202,23 @@ describe('test AllPossibleNetAdd', () => {
     expect(AllPossibleNetAdd("158.108.12.34", 1).length).to.equal(2);
     expect(AllPossibleNetAdd("158.108.12.34", 3).length).to.equal(8);
     expect(AllPossibleNetAdd("158.108.12.34", 7).length).to.equal(128);
+  })
+})
+
+describe('test AllPossibleLength', () => {
+  it('should AllPossibleLength number', () => {
+    // expect(AllPossibleLength(AllPossibleNetAdd("158.108.12.34", 26), 26).length).to.equal(4);
+    // expect(AllPossibleLength(AllPossibleNetAdd("158.108.12.34", 28), 28).length).to.equal(16);
+    // expect(AllPossibleLength(AllPossibleNetAdd("158.108.12.34", 24), 24).length).to.equal(1);
+    expect(AllPossibleLength(AllPossibleNetAdd("158.108.12.34", 3), 3).length).to.equal(8);
+  })
+})
+
+describe('test broadcastPos', () => {
+  it('should broadcastPos number', () => {
+    // expect(broadcastPos(AllPossibleNetAdd("158.108.12.34", 26), 26).length).to.equal(4);
+    // expect(broadcastPos(AllPossibleNetAdd("158.108.12.34", 28), 28).length).to.equal(16);
+    // expect(broadcastPos(AllPossibleNetAdd("158.108.12.34", 24), 24).length).to.equal(1);
+    expect(broadcastPos(AllPossibleNetAdd("158.108.12.34", 3), 3).length).to.equal(8);
   })
 })

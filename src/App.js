@@ -39,16 +39,10 @@ class App extends Component {
       <div className="App">
         <div className="container">
           <div className="row">
+            {/* Header */}
             <div className="page-header">
               <label id="text-header">IP Subnet Calculator</label>
               <div class="input-form">
-                {/* <div className="row">
-                  <div className="col-xs-3"><input /></div>
-                  <div className="col-xs-3"><input /></div>
-                  <div className="col-xs-3"><input /></div>
-                  <div className="col-xs-3"><input /></div>
-                </div> */}
-
                 <div className="row">
                   <div className="col col-xs-3 col-xs-offset-3">Network Class</div>
                   <div className="col col-xs-3">
@@ -79,6 +73,8 @@ class App extends Component {
                 </div>
               </div>
             </div>
+
+            {/* Result table */}
             <div>
             {
               this.state.checked &&
@@ -158,7 +154,21 @@ class App extends Component {
                 </div>
               </div>
             }
-            </div>  
+            </div> 
+
+            {/* All Possible table */}
+            {
+              this.state.checked &&
+              <div className="row">
+                <div className="col col-xs-9 col-xs-offset-3">
+                  <div className="table-result">
+                  </div>
+                </div>
+              </div>
+            }
+            <div>
+            </div>
+
           </div>
         </div>
       </div>
