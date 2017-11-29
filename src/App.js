@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { subnet, classSubnet, IpToBinary, NetworkAdd, usableLength, broadcast, ResultHost,ResultUsable, WildcardMask, BinarySubnet, classIp, IpType, Short, BinaryID, HexID, IpToDecimal } from './utils/helper'
+import { subnet, classSubnet, IpToBinary, NetworkAdd, usableLength, broadcast, ResultHost,ResultUsable, WildcardMask, BinarySubnet, classIp, IpType, Short, BinaryID, HexID, IpToDecimal, AllPossibleLength, AllPossibleNetAdd, broadcastPos } from './utils/helper'
 
 class App extends Component {
   state = {
@@ -159,9 +159,24 @@ class App extends Component {
             {/* All Possible table */}
             {
               this.state.checked &&
-              <div className="row">
-                <div className="col col-xs-9 col-xs-offset-3">
-                  <div className="table-result">
+              <div>
+                <label id="text-header">All Possible</label>
+                <div className="row">
+                  <div className="col col-xs-10 col-xs-offset-2">
+                    <div className="table-possible">
+                      <table style={{ width:'100%' }}>
+                        <tr>
+                          <th>Network Address</th>
+                          <th>Usable Host Length</th>
+                          <th>Broadcast Address</th>
+                        </tr>
+                          { AllPossibleNetAdd(this.state.ip, this.state.n).map((net, i) =>
+                            <tr value={i}>
+                                <td>{ net }</td>
+                            </tr>
+                          )}
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
