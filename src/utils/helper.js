@@ -329,27 +329,9 @@ export const AllPossibleNetAdd = (ip, n) => {
   return net;
 }
 
-export const AllPossibleLength = (ip, n) => {
-  var begin = [];
-  var last = [];
-  var posLength = [];
-  for(var i = 0; i < ip.length; i++) {
-    begin.push(DecimalToIp(IpToDecimal(ip[i])+1));
-    ip[i] = broadcast(ip[i], n);
-    last.push(DecimalToIp(IpToDecimal(ip[i])-1));
-    posLength.push(begin + ' - ' + last);
-  }
-  return posLength;
-}
-
-export const broadcastPos =  (ip, n) => {
-  var pos = [];
-  for(var i = 0; i < ip.length; i++) {
-    pos.push(broadcast(ip[i], n));
-  }
-  console.log(ip);
-  console.log(pos);
-  return pos;
+export const IsIpv4 = (ip) => {
+  const regex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  return regex.test(ip);
 }
 
 

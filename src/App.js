@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { subnet, classSubnet, IpToBinary, NetworkAdd, usableLength, broadcast, ResultHost,ResultUsable, WildcardMask, BinarySubnet, classIp, IpType, Short, BinaryID, HexID, IpToDecimal, AllPossibleLength, AllPossibleNetAdd, broadcastPos } from './utils/helper'
+import { subnet, classSubnet, IpToBinary, NetworkAdd, usableLength, broadcast, ResultHost,ResultUsable, WildcardMask, BinarySubnet, classIp, IpType, Short, BinaryID, HexID, IpToDecimal, AllPossibleNetAdd, IsIpv4} from './utils/helper'
 
 class App extends Component {
   state = {
     subnetall: classSubnet('A'),
     type: 'Any',
-    ip: '0.0.0.0',
+    ip: '0.0.0',
     n: '32',
     checked: false,
   }
@@ -14,7 +14,6 @@ class App extends Component {
       n: e.target.value,
       subnet: subnet(this.state.n)
     });
-    //console.log(subnet(this.state.n) + ' / ' + (e.target.value));
   }
   handleChangeRadio = (e) => {
     this.setState({
@@ -26,13 +25,13 @@ class App extends Component {
     this.setState({
       ip: e.target.value
     });
-    //console.log(e.target.value);
+    console.log(e.target.value);
   }
   handleClick = (e) => {
     this.setState({
-      checked: true
+      checked: true,
+      ipUse: this.state.ip
     });
-    //console.log(this.state.subnetall.split('/'));
   }
   render() {
     return(
@@ -68,7 +67,7 @@ class App extends Component {
                   <div className="col col-xs-3 col-xs-offset-3">IP Address</div>
                   <div className="col col-xs-3">
                     <input onChange={this.handleChangeInput} type="text" name="ip-address"/>
-                    <button onClick={this.handleClick} className="btn btn-success">submit</button>
+                    <button className="btn btn-success" disabled={!IsIpv4(this.state.ip)} onClick={this.handleClick}>submit</button>
                   </div>
                 </div>
               </div>
@@ -86,19 +85,19 @@ class App extends Component {
                       <table style={{ width:'100%' }}>
                         <tr>
                           <td>IP Address</td>
-                          <td>{ this.state.ip }</td>
+                          <td>{ this.state.ipUse }</td>
                         </tr>
                         <tr>
                           <td>Network Address</td>
-                          <td>{ NetworkAdd(this.state.ip, this.state.n) }</td>
+                          <td>{ NetworkAdd(this.state.ipUse, this.state.n) }</td>
                         </tr>
                         <tr>
                           <td>Usable Host IP Range</td>
-                          <td>{ usableLength(this.state.ip, this.state.n) }</td>
+                          <td>{ usableLength(this.state.ipUse, this.state.n) }</td>
                         </tr>
                         <tr>
                           <td>Broadcast Address</td>
-                          <td>{ broadcast(this.state.ip, this.state.n) }</td>
+                          <td>{ broadcast(this.state.ipUse, this.state.n) }</td>
                         </tr>
                         <tr>
                           <td>Total Number of Hosts</td>
@@ -130,23 +129,23 @@ class App extends Component {
                         </tr>
                         <tr>
                           <td>IP Type</td>
-                          <td>{ IpType(this.state.ip) }</td>
+                          <td>{ IpType(this.state.ipUse) }</td>
                         </tr>
                         <tr>
                           <td>Short</td>
-                          <td>{ this.state.ip }/{ this.state.n }</td>
+                          <td>{ this.state.ipUse }/{ this.state.n }</td>
                         </tr>
                         <tr>
                           <td>Binary ID</td>
-                          <td>{ BinaryID(this.state.ip) }</td>
+                          <td>{ BinaryID(this.state.ipUse) }</td>
                           </tr>
                         <tr>
                           <td>Integer ID</td>
-                          <td>{ IpToDecimal(this.state.ip) }</td>
+                          <td>{ IpToDecimal(this.state.ipUse) }</td>
                         </tr>
                         <tr>
                           <td>Hex ID</td>
-                          <td>{ HexID(this.state.ip) }</td>
+                          <td>{ HexID(this.state.ipUse) }</td>
                         </tr>
                       </table>
                     </div>
@@ -160,7 +159,7 @@ class App extends Component {
             {
               this.state.checked &&
               <div>
-                <label id="text-header">All Possible</label>
+                <label id="text-header">All Possible /{ this.state.n } Network</label>
                 <div className="row">
                   <div className="col col-xs-10 col-xs-offset-2">
                     <div className="table-possible">
@@ -170,9 +169,11 @@ class App extends Component {
                           <th>Usable Host Length</th>
                           <th>Broadcast Address</th>
                         </tr>
-                          { AllPossibleNetAdd(this.state.ip, this.state.n).map((net, i) =>
+                          { AllPossibleNetAdd(this.state.ipUse, this.state.n).map((net, i) =>
                             <tr value={i}>
                                 <td>{ net }</td>
+                                <td>{ usableLength(net, this.state.n) }</td>
+                                <td>{ broadcast(net, this.state.n) }</td>
                             </tr>
                           )}
                       </table>
