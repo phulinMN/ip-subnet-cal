@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { subnet, classSubnet, IpToBinary, NetworkAdd, usableLength, broadcast, ResultHost,ResultUsable, WildcardMask, BinarySubnet, classIp, IpType, Short, BinaryID, HexID, IpToDecimal, AllPossibleNetAdd, IsIpv4} from './utils/helper'
-import { Button, Icon, Radio, Input, Select, Grid, Form } from 'semantic-ui-react'
+import { Button, Icon, Radio, Input, Select, Grid, Form, Table } from 'semantic-ui-react'
 
 const subnetToSelectArray = (subnetArray) => {
   return subnetArray.map((subnet, n) => {
@@ -53,14 +53,13 @@ class App extends Component {
             {/* Header */}
             <div className="page-header">
               <label id="text-header">IP Subnet Calculator</label>
-              <div class="input-form">
               <Grid>
                 <Grid.Row centered columns={6}>
                   <Grid.Column>Network Class</Grid.Column>
                   <Grid.Column>
                   <Form>
                     <Form.Field>
-                      <Radio
+                      <Radio 
                         label='Any'
                         name='radio'
                         value='Any'
@@ -117,117 +116,123 @@ class App extends Component {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              </div>
             </div>
 
             {/* Result table */}
             <div>
             {
               this.state.checked &&
-              <div>
-                <label id="text-header">IP Subnet Calculator</label>
-                <div className="row">
-                  <div className="col col-xs-9 col-xs-offset-3">
-                    <div className="table-result">
-                      <table style={{ width:'100%' }}>
-                        <tr>
-                          <td>IP Address</td>
-                          <td>{ this.state.ipUse }</td>
-                        </tr>
-                        <tr>
-                          <td>Network Address</td>
-                          <td>{ NetworkAdd(this.state.ipUse, this.state.n) }</td>
-                        </tr>
-                        <tr>
-                          <td>Usable Host IP Range</td>
-                          <td>{ usableLength(this.state.ipUse, this.state.n) }</td>
-                        </tr>
-                        <tr>
-                          <td>Broadcast Address</td>
-                          <td>{ broadcast(this.state.ipUse, this.state.n) }</td>
-                        </tr>
-                        <tr>
-                          <td>Total Number of Hosts</td>
-                          <td>{ ResultHost(this.state.n) }</td>
-                        </tr>
-                        <tr>
-                          <td>Number of Usable Hosts</td>
-                          <td>{ ResultUsable(this.state.n) }</td>
-                        </tr>
-                        <tr>
-                          <td>Subnet Mask</td>
-                          <td>{ subnet(this.state.n) }</td>
-                        </tr>
-                        <tr>
-                          <td>Wildcard Mask</td>
-                          <td>{ WildcardMask(this.state.n) }</td>
-                        </tr>
-                        <tr>
-                          <td>Binary Subnet Mask</td>
-                          <td>{ BinarySubnet(this.state.n) }</td>
-                        </tr>
-                        <tr>
-                          <td>IP Class</td>
-                          <td>{ classIp(this.state.n) }</td>
-                        </tr>
-                        <tr>
-                          <td>CIDR Notation</td>
-                          <td>/{ this.state.n }</td>
-                        </tr>
-                        <tr>
-                          <td>IP Type</td>
-                          <td>{ IpType(this.state.ipUse) }</td>
-                        </tr>
-                        <tr>
-                          <td>Short</td>
-                          <td>{ this.state.ipUse }/{ this.state.n }</td>
-                        </tr>
-                        <tr>
-                          <td>Binary ID</td>
-                          <td>{ BinaryID(this.state.ipUse) }</td>
-                          </tr>
-                        <tr>
-                          <td>Integer ID</td>
-                          <td>{ IpToDecimal(this.state.ipUse) }</td>
-                        </tr>
-                        <tr>
-                          <td>Hex ID</td>
-                          <td>{ HexID(this.state.ipUse) }</td>
-                        </tr>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <Grid>
+                  <Grid.Row centered columns={3}>
+                    <Grid.Column>
+                      <Table celled selectable>
+                        <Table.Header>
+                          <Table.Row>
+                            <Table.HeaderCell colSpan='2'>IP Subnet Calculator</Table.HeaderCell>
+                          </Table.Row>
+                        </Table.Header>
+
+                        <Table.Body>
+                          <Table.Row>
+                            <Table.Cell>IP Address</Table.Cell>
+                            <Table.Cell>{ this.state.ipUse }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Network Address</Table.Cell>
+                            <Table.Cell>{ NetworkAdd(this.state.ipUse, this.state.n) }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Usable Host IP Range</Table.Cell>
+                            <Table.Cell>{ usableLength(this.state.ipUse, this.state.n) }</Table.Cell>
+                         </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Broadcast Address</Table.Cell>
+                            <Table.Cell>{ broadcast(this.state.ipUse, this.state.n) }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Total Number of Hosts</Table.Cell>
+                            <Table.Cell>{ ResultHost(this.state.n) }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Number of Usable Hosts</Table.Cell>
+                            <Table.Cell>{ ResultUsable(this.state.n) }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Subnet Mask</Table.Cell>
+                            <Table.Cell>{ subnet(this.state.n) }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Wildcard Mask</Table.Cell>
+                            <Table.Cell>{ WildcardMask(this.state.n) }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Binary Subnet Mask</Table.Cell>
+                            <Table.Cell>{ BinarySubnet(this.state.n) }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>IP Class</Table.Cell>
+                            <Table.Cell>{ classIp(this.state.n) }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>CIDR Notation</Table.Cell>
+                            <Table.Cell>/{ this.state.n }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>IP Type</Table.Cell>
+                            <Table.Cell>{ IpType(this.state.ipUse) }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Short</Table.Cell>
+                            <Table.Cell>{ this.state.ipUse }/{ this.state.n }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Binary ID</Table.Cell>
+                            <Table.Cell>{ BinaryID(this.state.ipUse) }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Integer ID</Table.Cell>
+                            <Table.Cell>{ IpToDecimal(this.state.ipUse) }</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Hex ID</Table.Cell>
+                            <Table.Cell>{ HexID(this.state.ipUse) }</Table.Cell>
+                          </Table.Row>
+                        </Table.Body>
+                      </Table>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
             }
             </div> 
 
             {/* All Possible table */}
             {
               this.state.checked &&
-              <div>
-                <label id="text-header">All Possible /{ this.state.n } Network</label>
-                <div className="row">
-                  <div className="col col-xs-10 col-xs-offset-2">
-                    <div className="table-possible">
-                      <table style={{ width:'100%' }}>
-                        <tr>
-                          <th>Network Address</th>
-                          <th>Usable Host Length</th>
-                          <th>Broadcast Address</th>
-                        </tr>
-                          { AllPossibleNetAdd(this.state.ipUse, this.state.n).map((net, i) =>
-                            <tr value={i}>
-                                <td>{ net }</td>
-                                <td>{ usableLength(net, this.state.n) }</td>
-                                <td>{ broadcast(net, this.state.n) }</td>
-                            </tr>
-                          )}
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Grid>
+                <Grid.Row centered columns={3}>
+                  <Grid.Column>
+                    <Table  celled selectable> 
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell>Network Address</Table.HeaderCell>
+                          <Table.HeaderCell>Usable Host LengTable.Cell</Table.HeaderCell>
+                          <Table.HeaderCell>Broadcast Address</Table.HeaderCell>
+                        </Table.Row>
+                      </Table.Header>
+
+                      <Table.Body>
+                        { AllPossibleNetAdd(this.state.ipUse, this.state.n).map((net, i) =>
+                        <Table.Row>
+                          <Table.Cell>{ net }</Table.Cell>
+                          <Table.Cell>{ usableLength(net, this.state.n) }</Table.Cell>
+                          <Table.Cell>{ broadcast(net, this.state.n) }</Table.Cell>
+                        </Table.Row>
+                        )}
+                      </Table.Body>
+                    </Table>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
             }
             <div>
             </div>
