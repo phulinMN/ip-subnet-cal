@@ -1,5 +1,5 @@
 {
-  "homepage": "https://phulinMN.github.io/subnet-calulator",
+  "homepage": "https://phulinMN.github.io/ip-subnet-cal",
   "name": "subnet",
   "version": "0.1.0",
   "private": true,
@@ -11,6 +11,7 @@
     "chai": "^4.1.2",
     "element-react": "^1.4.3",
     "elemental": "^0.6.1",
+    "gh-pages": "^1.1.0",
     "material-ui": "^0.19.4",
     "react": "^16.2.0",
     "react-addons-css-transition-group": "^15.6.2",
@@ -20,6 +21,8 @@
     "semantic-ui-react": "^0.77.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
