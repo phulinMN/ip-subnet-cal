@@ -257,7 +257,7 @@ export const classSubnet = (c) => {
       ans.push(subnet(i));
     }
   }
-  return ans;
+  return ans; 
 }
 
 export const IpType = (ip) => {

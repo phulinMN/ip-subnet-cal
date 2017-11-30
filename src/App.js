@@ -19,11 +19,13 @@ class App extends Component {
     n: '32',
     checked: false,
   }
-  handleChangeSelect = (e) => {
+  handleChangeSelect = (e, { value }) => {
     this.setState({
-      n: e.target.value,
-      subnet: subnet(this.state.n)
+      n: value,
+      subnet: subnet(this.state.n),
+      ipUse: this.state.ip
     });
+    // console.log(value)
   }
   handleChangeRadio = (e, { value }) => {
     this.setState({
@@ -35,10 +37,10 @@ class App extends Component {
     this.setState({
       ip: e.target.value
     });
-    console.log(e.target.value);
+    // console.log(e.target.value);
   }
   handleClick = (e) => {
-    console.log(this.state.ip)
+    // console.log(this.state.ip)
     this.setState({
       checked: true,
       ipUse : this.state.ip
@@ -66,27 +68,21 @@ class App extends Component {
                         checked={this.state.type === 'Any'}
                         onChange={this.handleChangeRadio}
                       />
-                    </Form.Field>
-                    <Form.Field>
-                    <Radio
+                      <Radio
                         label='A'
                         name='radio'
                         value='A'
                         checked={this.state.type === 'A'}
                         onChange={this.handleChangeRadio}
                       />
-                    </Form.Field>
-                    <Form.Field>
-                    <Radio
+                      <Radio
                         label='B'
                         name='radio'
                         value='B'
                         checked={this.state.type === 'B'}
                         onChange={this.handleChangeRadio}
                       />
-                    </Form.Field>
-                    <Form.Field>
-                    <Radio
+                      <Radio
                         label='C'
                         name='radio'
                         value='C'
@@ -100,7 +96,7 @@ class App extends Component {
                 <Grid.Row centered columns={6}>
                   <Grid.Column>Subnet</Grid.Column>
                   <Grid.Column>
-                    <Select placeholder="Select Subnet" options={subnetToSelectArray(this.state.subnetall)} />
+                    <Select placeholder="Select Subnet" options={subnetToSelectArray(this.state.subnetall)} onChange={this.handleChangeSelect} />
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row centered columns={6}>
@@ -122,7 +118,8 @@ class App extends Component {
             <div>
             {
               this.state.checked &&
-                <Grid>
+              <div>
+                 <Grid>
                   <Grid.Row centered columns={3}>
                     <Grid.Column>
                       <Table celled selectable>
@@ -144,7 +141,7 @@ class App extends Component {
                           <Table.Row>
                             <Table.Cell>Usable Host IP Range</Table.Cell>
                             <Table.Cell>{ usableLength(this.state.ipUse, this.state.n) }</Table.Cell>
-                         </Table.Row>
+                        </Table.Row>
                           <Table.Row>
                             <Table.Cell>Broadcast Address</Table.Cell>
                             <Table.Cell>{ broadcast(this.state.ipUse, this.state.n) }</Table.Cell>
@@ -201,7 +198,8 @@ class App extends Component {
                       </Table>
                     </Grid.Column>
                   </Grid.Row>
-                </Grid>
+                </Grid> 
+              </div>
             }
             </div> 
 
@@ -234,12 +232,11 @@ class App extends Component {
                 </Grid.Row>
               </Grid>
             }
-            <div>
-            </div>
 
           </div>
         </div>
       </div>
+
     );
   }
 }
