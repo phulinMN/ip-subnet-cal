@@ -80,7 +80,7 @@ class App extends Component {
                                   />
                                 </Table.Cell>
                                 <Table.Cell>
-                                  <Radio id="check-box"
+                                  <Radio id="check-box-1"
                                     label='A'
                                     name='radio'
                                     value='A'
@@ -89,7 +89,7 @@ class App extends Component {
                                   />
                                 </Table.Cell>
                                 <Table.Cell>
-                                  <Radio id="check-box"
+                                  <Radio id="check-box-2"
                                     label='B'
                                     name='radio'
                                     value='B'
@@ -98,7 +98,7 @@ class App extends Component {
                                   />  
                                 </Table.Cell>
                                 <Table.Cell>
-                                  <Radio id="check-box"
+                                  <Radio id="check-box-3"
                                     label='C'
                                     name='radio'
                                     value='C'

@@ -48,9 +48,8 @@ body {
 #table-all {
   background: #EBF5FB;
   color: teal;
-  /* color: #49B1FE; */
 }
 
-#check-box+label {
+#check-box+label, #check-box-1+label, #check-box-2+label, #check-box-3+label {
   color: teal;
 }
